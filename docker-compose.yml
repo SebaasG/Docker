@@ -6,7 +6,7 @@ services:
     ports:
       - "5000:3000"
     volumes:
-      - mydata2:/app   # Monta el directorio actual en /app dentro del contenedor
+      - .:/app   # Monta el directorio actual en /app dentro del contenedor
     working_dir: /app   # Establece el directorio de trabajo como /app
     command: node app.js   # Ajusta el comando para ejecutar app.js
 
