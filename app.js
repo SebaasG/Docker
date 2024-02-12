@@ -1,28 +1,50 @@
-import express from 'express'
-import {v4} from 'uuid'
-import mongoose from 'mongoose'
-const app = express()
+import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
+import mongoose from 'mongoose';
+// import mysql from 'mysql'
 
-const db = await mongoose.connect("mongodb://mymongo/sebasdb")
-console.log(db.connection.db.databaseName)
+const app = express();
 
-const product  = new mongoose.Schema({
+(async () => {
+    try {
+        const db = await mongoose.connect("mongodb://mymongo/sebasdb");
+        console.log(`Conexión exitosa a la base de datos: ${db.connection.db.databaseName}`);
+    } catch (error) {
+        console.error('Error al conectar a la base de datos:', error);
+    }
+})();
+
+const productSchema = new mongoose.Schema({
     name: String
-})
+});
 
-const productModel = mongoose.model('Product', product)
-app.get('/',async(req ,res) =>{
+const Product = mongoose.model('Product', productSchema);
 
- const newProduct = await productModel.create({
-        name: 'laptop'
-    })
+app.get('/', async (req, res) => {
+    try {
+        const newProduct = await Product.create({ name: 'laptop' });
+        res.json({
+            id: uuidv4(),
+            newProduct
+        });
+    } catch (error) {
+        console.error('Error al crear un nuevo producto:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 
+// Consulta de todos los productos
+app.get('/products', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.json(products);
+    } catch (error) {
+        console.error('Error al obtener todos los productos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 
-res.json({
-    id: v4(),
-    newProduct
-})
-})
-
-app.listen(3000)
-console.log('server listening in the port 5000')
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
