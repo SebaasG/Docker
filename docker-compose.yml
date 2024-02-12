@@ -1,9 +1,17 @@
 version: '3.9'
 services:
- nodePrueba:
-  image: node
-  cotainer_name: projectNode
-  ports: 
-  - 5000:3000
-  build: .
-  command: node server.js
+  nodePrueba:
+    image: node
+    container_name: pruebita
+    ports:
+      - "5000:3000"
+    volumes:
+      - .:/app   # Monta el directorio actual en /app dentro del contenedor
+    working_dir: /app   # Establece el directorio de trabajo como /app
+    command: node app.js   # Ajusta el comando para ejecutar app.js
+
+  db:
+    image: mongo
+    container_name: mymongo
+    ports:
+      - "27017:27017"
