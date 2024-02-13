@@ -1,20 +1,20 @@
-# Usa una imagen de Node.js como base
-FROM node:20.11.0
+# Usa una imagen base de Node.js
+FROM node
 
-# Establece el directorio de trabajo dentro del contenedor
-WORKDIR /usr/src/app
+# Establece el directorio de trabajo en /app
+WORKDIR /app
 
-# Copia el archivo package.json y package-lock.json (si existe) al directorio de trabajo
+# Copia los archivos package.json y package-lock.json
 COPY package*.json ./
 
-# Instala las dependencias de la aplicación
+# Instala las dependencias del proyecto
 RUN npm install
 
-# Copia el resto de los archivos de la aplicación al directorio de trabajo
+# Copia el resto de los archivos del proyecto
 COPY . .
 
-# Expone el puerto en el que se ejecuta la aplicación (por ejemplo, el 3000)
+# Expón el puerto 3000
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación cuando el contenedor se inicie
-CMD ["node", "server.js"]
+# Comando por defecto para ejecutar la aplicación
+CMD ["node", "app.js"]

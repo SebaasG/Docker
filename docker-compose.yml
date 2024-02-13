@@ -1,17 +1,23 @@
-version: '3.9'
+version: '3.8'
 services:
-  nodePrueba:
-    image: node
+  nodeprueba:  
+    build: .
     container_name: pruebita
     ports:
       - "5000:3000"
     volumes:
-      - amya:/app   # Monta el directorio actual en /app dentro del contenedor
-    working_dir: /app   # Establece el directorio de trabajo como /app
-    command: node app.js   # Ajusta el comando para ejecutar app.js
+      - appdata:/app/data  # Monta un volumen para la persistencia de datos
+    depends_on:
+      - db
 
   db:
     image: mongo
-    container_name: mymongo    
+    container_name: mymongo
     ports:
       - "27017:27017"
+    volumes:
+      - dbdata:/data/db  # Monta un volumen para la persistencia de datos de MongoDB
+
+volumes:
+  appdata:  # Volumen para los datos de la aplicación Node.js
+  dbdata:   # Volumen para los datos de MongoDB
