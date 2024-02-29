@@ -1,14 +1,16 @@
 pipeline {
     agent any
+    environment {
+        PATH = "$PATH:/opt/bin/docker"
+    }
     stages {
-
         stage('Verify tooling') {
-            env.PATH = "${env.PATH}:/opt/bin/docker"
             steps {
-                sh 'docker info'
-                  sh ' docker version'
-                    sh 'docker compose version'
-                
+                script {
+                    sh 'docker info'
+                    sh 'docker version'
+                    sh 'docker-compose version'
+                }
             }
         }
     }
