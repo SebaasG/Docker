@@ -1,8 +1,19 @@
-stages {
-    stage('Build Docker Image') {
-        steps {
-            script {
-                sh 'docker --version .'
+pipeline {
+    agent any
+  
+    environment {
+        dockerHome = tool 'docker'
+        PATH = "${dockerHome}/bin:${env.PATH}"
+    }
+
+    stages {
+        stage('Verify tooling') {
+            steps {
+                script {
+                    sh 'docker info'
+                    sh 'docker version'
+                    sh 'docker-compose version'
+                }
             }
         }
     }
