@@ -1,10 +1,13 @@
 pipeline {
     agent any
   
+    environment {
+        dockerHome = tool 'docker'
+        PATH = "${dockerHome}/bin:${env.PATH}"
+    }
+
     stages {
         stage('Verify tooling') {
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
             steps {
                 script {
                     sh 'docker info'
