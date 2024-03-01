@@ -1,6 +1,5 @@
 pipeline {
     agent any
-  
     environment {
         dockerHome = tool 'docker'
         PATH = "${dockerHome}/bin:${env.PATH}"
