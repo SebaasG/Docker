@@ -9,6 +9,7 @@ pipeline {
         stage('Verify tooling') {
             steps {
                 script {
+                    
                     sh 'docker ps'
                     sh 'docker version'
                     sh 'docker-compose version'
