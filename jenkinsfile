@@ -11,7 +11,7 @@ pipeline {
                 script {
                     
                     echo 'docker ps'
-                    // sh 'docker version'
+                    sh 'docker version'
                     // sh 'docker-compose version'
                 }
             }
