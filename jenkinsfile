@@ -12,7 +12,7 @@ pipeline {
                     
                     echo 'docker ps'
                     sh 'docker version'
-                    sh 'docker ps'
+                    sh 'docker-compose up'
                     // sh 'docker-compose version'
                 }
             }
