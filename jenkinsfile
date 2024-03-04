@@ -3,17 +3,15 @@ pipeline {
     environment {
         dockerHome = tool 'docker'
         PATH = "${dockerHome}/bin:${env.PATH}"
-     
     }
-
     stages {
         stage('Verify tooling') {
             steps {
                 script {
-                      if (env.BRANCH_NAME == 'main') {
-                        sh 'docker ps'
+                    if (env.BRANCH_NAME == 'main') {
+                        sh 'docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d --build'
                     } else if (env.BRANCH_NAME == 'develop') {
-                        sh 'docker images'
+                        sh 'docker-compose -f docker-compose.yml -f docker-compose.preproduction.yml up -d --build'
                     }
                 }
             }
