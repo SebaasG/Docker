@@ -9,10 +9,7 @@ pipeline {
     stages {
         stage('Verify tooling') {
             when {
-                expression {
-                    env.BRANCH_NAME == 'main'
-                    echo env.BRANCH_NAME
-                }
+                branch 'main'
             }
             steps {
                 script {
