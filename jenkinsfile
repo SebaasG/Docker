@@ -9,11 +9,9 @@ pipeline {
         stage('Verify tooling') {
             steps {
                 script {
-                    
                     echo 'docker ps'
                     sh 'docker version'
-                    // sh 'docker-compose up'
-                    // sh 'docker-compose version'
+                    sh 'docker-compose up --build'
                 }
             }
         }
