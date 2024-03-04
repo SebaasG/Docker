@@ -3,16 +3,19 @@ pipeline {
     environment {
         dockerHome = tool 'docker'
         PATH = "${dockerHome}/bin:${env.PATH}"
+        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
     }
+
     stages {
         stage('Verify tooling') {
+            when {
+                expression {
+                    env.BRANCH_NAME == 'develop'
+                }
+            }
             steps {
                 script {
-                    if (env.BRANCH_NAME == 'main') {
-                        sh 'docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d --build'
-                    } else if (env.BRANCH_NAME == 'develop') {
-                        sh 'docker-compose -f docker-compose.yml -f docker-compose.preproduction.yml up -d --build'
-                    }
+                    sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --build'
                 }
             }
         }
