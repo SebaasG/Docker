@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    // environment {
-    //     dockerHome = tool 'docker'
-    //     PATH = "${dockerHome}/bin:${env.PATH}"
-    // }
+    environment {
+        dockerHome = tool 'docker'
+        PATH = "${dockerHome}/bin:${env.PATH}"
+    }
 
     stages {
         stage('Verify tooling') {
