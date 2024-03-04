@@ -10,8 +10,11 @@ pipeline {
         stage('Verify tooling') {
             steps {
                 script {
-                    echo 'docker ps'
-                    sh 'docker version'
+                      if (env.BRANCH_NAME == 'main') {
+                        sh 'docker ps'
+                    } else if (env.BRANCH_NAME == 'develop') {
+                        sh 'docker images'
+                    }
                 }
             }
         }
