@@ -11,7 +11,7 @@ pipeline {
             when {
                 expression {
                     env.BRANCH_NAME == 'main'
-                    echo `${env.BRANCH_NAME}`
+                    echo env.BRANCH_NAME
                 }
             }
             steps {
