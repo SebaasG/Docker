@@ -3,6 +3,7 @@ pipeline {
     environment {
         dockerHome = tool 'docker'
         PATH = "${dockerHome}/bin:${env.PATH}"
+         DOCKER_COMPOSE_PATH = '/usr/local/bin/docker-compose' // Reemplaza esto con la ruta de tu binario de Docker Compose
     }
 
     stages {
@@ -11,7 +12,7 @@ pipeline {
                 script {
                     echo 'docker ps'
                     sh 'docker version'
-                    sh 'docker-compose up --build'
+                    sh '${DOCKER_COMPOSE_PATH} up --build'
                 }
             }
         }
