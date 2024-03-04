@@ -8,9 +8,7 @@ pipeline {
 
     stages {
         stage('Verify tooling') {
-            when {
-                branch 'main'
-            }
+          
             steps {
                 script {
                     sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --build'
