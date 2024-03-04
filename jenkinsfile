@@ -1,39 +1,19 @@
 pipeline {
     agent any
-    
+    // environment {
+    //     dockerHome = tool 'docker'
+    //     PATH = "${dockerHome}/bin:${env.PATH}"
+    // }
+
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/SebaasG/Docker.git'
-            }
-        }
-        stage('Build') {
+        stage('Verify tooling') {
             steps {
                 script {
-                    // Construye las imágenes de Docker
-                    dockerComposeBuild()
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    // Inicia los contenedores de Docker
-                    dockerComposeUp()
-                }
-            }
-        }
-        stage('Post-Deploy') {
-            steps {
-                script {
-                    try {
-                        // Verifica que la aplicación esté en ejecución
-                        sh 'curl http://localhost:3000'
-                    } catch (Exception e) {
-                        // Si hay un error, deshacer el despliegue
-                        dockerComposeDown()
-                        error 'Error en el despliegue'
-                    }
+                    
+                    echo 'docker ps'
+                    sh 'docker version'
+                    // sh 'docker-compose up'
+                    // sh 'docker-compose version'
                 }
             }
         }
